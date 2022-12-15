@@ -3,7 +3,6 @@
 class GithubClient
 {
 
-    private $username;
     private $client;
 
     public function __construct()
@@ -11,6 +10,11 @@ class GithubClient
         $this->client = $this->githubClient();
     }
 
+    /**
+     * Autenticação.
+     *
+     * @return GithubOAuthClient
+     */
     public function githubOAuthClient()
     {
         return $gitClient = new \GithubOAuthClient(array(
@@ -20,12 +24,15 @@ class GithubClient
         ));
     }
 
+    /**
+     * Verifica se está autenticado.
+     *
+     * @return bool
+     * @throws \Psr\Container\ContainerExceptionInterface
+     * @throws \Psr\Container\NotFoundExceptionInterface
+     */
     public function isAuthentiqued()
     {
-
-//        if(is_null(session()->get('userData')) || is_null(session()->get('userData')->username)){
-//            session()->forget('access_token');
-//        }
 
         if(!is_null(session()->get('access_token'))) {
             return true;
@@ -33,6 +40,12 @@ class GithubClient
         return false;
     }
 
+    /**
+     * Pega dados do usuário autenticado e retorna em um array.
+     *
+     * @param $gitUser
+     * @return array
+     */
     public function gitUserData($gitUser)
     {
         return [
@@ -47,18 +60,55 @@ class GithubClient
         ];
     }
 
+    /**
+     * Retorna a instancia da classe Client do Github.
+     *
+     * @return \Github\Client
+     */
     public function githubClient()
     {
         return new \Github\Client();
     }
 
+    /**
+     * Lista respositórios via API.
+     *
+     * @param $username
+     * @return mixed
+     */
     public function repositories($username)
     {
         return $this->githubClient()->api('user')->repositories($username);
     }
 
-    public function commits($username, $repository)
+    /**
+     * Lista commits via API.
+     *
+     * @param $username
+     * @param $repository
+     * @param array $params
+     * @return null
+     */
+    public function commits($username, $repository, array $params = [])
     {
-        return $this->githubClient()->api('repo')->commits()->all($username, $repository, array('sha' => 'main'));
+        try {
+            $params = array_merge(['sha' => 'main'], $params);
+            return $this->githubClient()->api('repo')->commits()->all($username, $repository, $params);
+        }catch (RuntimeException){
+            return null;
+        }
+    }
+
+    /**
+     * Retorma dados do commit.
+     *
+     * @param $username
+     * @param $repository
+     * @param $sha
+     * @return mixed
+     */
+    public function commit($username, $repository, $sha)
+    {
+        return $this->githubClient()->api('repo')->commits()->show($username, $repository, $sha);
     }
 }

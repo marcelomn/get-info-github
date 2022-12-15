@@ -26,7 +26,11 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        }
+        },
+        "files": [
+            "app/Helpers/GithubOAuthClient.php",
+            "app/Helpers/GithubClient.php"
+        ]
     },
     "autoload-dev": {
         "psr-4": {
