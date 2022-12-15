@@ -12,7 +12,7 @@ Desenvolvido em Laravel.
 
 Obtém lista de respositórios, quantidade de commits por data (últimos 90 dias) e também dados do commit de uma data.
 
-Execute as estapas abaixo:
+Execute as etapas abaixo:
 - Crie um APP no github
 - Baixe ou clone o projeto
 - Renomeie o arquivo .env.example para .env
