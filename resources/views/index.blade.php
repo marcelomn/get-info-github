@@ -5,13 +5,13 @@
 <main class="container">
     <div class="d-flex align-items-center p-3 my-3 text-white bg-purple rounded shadow-sm">
         <div class="lh-1">
-            <h1 class="h6 mb-0 text-white lh-1">Bootstrap</h1>
-            <small>Since 2011</small>
+            <h1 class="h6 mb-0 text-white lh-1">Github</h1>
+            <small>Meus respositórios</small>
         </div>
     </div>
 
     <div class="my-3 p-3 bg-body rounded shadow-sm">
-        <h6 class="border-bottom pb-2 mb-0">Meus repositórios</h6>
+{{--        <h6 class="border-bottom pb-2 mb-0">Meus repositórios</h6>--}}
 
         @foreach($repositories as $repository)
         <div class="d-flex text-muted pt-3">
